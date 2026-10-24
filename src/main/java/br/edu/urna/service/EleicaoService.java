@@ -30,7 +30,7 @@ public class EleicaoService {
     private final List<String> titulosQueVotaram = new ArrayList<>();
     private boolean secaoAberta = false;
 
-    public void cadastrarCandidato(String nome, int numero, String partido, String cargo, int idade) {
+    public void cadastrarCandidato(String nome, int numero, String partido, int idade) {
         if (secaoAberta) {
             System.out.println("Não é possível cadastrar candidatos depois que a seção foi aberta.");
             return;
@@ -45,7 +45,6 @@ public class EleicaoService {
                     .comNome(nome)
                     .comNumero(numero)
                     .comPartido(partido)
-                    .comCargo(cargo)
                     .comIdade(idade)
                     .construir();
             cofre.adicionarCandidato(candidato);

@@ -8,7 +8,7 @@ O projeto aplica **6 Design Patterns GoF**, 2 de cada categoria.
 
 | Padrão | Categoria | Problema de negócio resolvido |
 | ------ | --------- | ----------------------------- |
-| **Builder** | Criacional | Monta o `Candidato` passo a passo (nome, número, partido, cargo e idade), validando os dados antes de criar o objeto e evitando construtores gigantes. |
+| **Builder** | Criacional | Monta o `Candidato` passo a passo (nome, número, partido e idade), validando os dados antes de criar o objeto e evitando construtores gigantes. |
 | **Singleton** | Criacional | Garante uma única instância de `CofreDeVotos`, centralizando candidatos, votos nominais, brancos e nulos da seção. |
 | **Adapter** | Estrutural | Converte a resposta numérica (`1`/`0`) do `SistemaLegadoTSE` para o `boolean` esperado pela interface `ValidadorEleitor` da urna. |
 | **Facade** | Estrutural | `TerminalMesarioFacade` coordena tela, áudio e impressora com um único comando para abrir a seção (Zerésima) ou encerrá-la (Boletim de Urna). |

@@ -9,14 +9,12 @@ public class Candidato {
     private final String nome;
     private final int numero;
     private final String partido;
-    private final String cargo;
     private final int idade;
 
-    public Candidato(String nome, int numero, String partido, String cargo, int idade) {
+    public Candidato(String nome, int numero, String partido, int idade) {
         this.nome = nome;
         this.numero = numero;
         this.partido = partido;
-        this.cargo = cargo;
         this.idade = idade;
     }
 
@@ -32,16 +30,12 @@ public class Candidato {
         return partido;
     }
 
-    public String getCargo() {
-        return cargo;
-    }
-
     public int getIdade() {
         return idade;
     }
 
     @Override
     public String toString() {
-        return numero + " - " + nome + " (" + partido + ") - " + cargo + ", " + idade + " anos";
+        return numero + " - " + nome + " (" + partido + "), " + idade + " anos";
     }
 }

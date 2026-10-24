@@ -11,7 +11,6 @@ public class CandidatoBuilder {
     private String nome;
     private int numero;
     private String partido;
-    private String cargo;
     private int idade;
 
     public CandidatoBuilder() {
@@ -36,11 +35,6 @@ public class CandidatoBuilder {
         return this;
     }
 
-    public CandidatoBuilder comCargo(String cargo) {
-        this.cargo = cargo;
-        System.out.println("[BUILDER] Cargo definido: " + cargo);
-        return this;
-    }
 
     public CandidatoBuilder comIdade(int idade) {
         this.idade = idade;
@@ -59,6 +53,6 @@ public class CandidatoBuilder {
             throw new IllegalStateException("O candidato precisa ter pelo menos 18 anos.");
         }
         System.out.println("[BUILDER] Candidato construído com sucesso!");
-        return new Candidato(nome, numero, partido, cargo, idade);
+        return new Candidato(nome, numero, partido, idade);
     }
 }

@@ -62,9 +62,8 @@ public class Main {
         String nome = lerTexto("Nome: ");
         int numero = lerInteiro("Número: ");
         String partido = lerTexto("Partido: ");
-        String cargo = lerTexto("Cargo: ");
         int idade = lerInteiro("Idade: ");
-        eleicaoService.cadastrarCandidato(nome, numero, partido, cargo, idade);
+        eleicaoService.cadastrarCandidato(nome, numero, partido, idade);
     }
 
     private static void liberarEleitor() {
