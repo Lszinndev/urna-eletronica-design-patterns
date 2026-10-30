@@ -2,8 +2,6 @@ package br.edu.urna.domain;
 
 /**
  * Monta um objeto Candidato passo a passo.
- * Fica no mesmo pacote de Candidato para que o construtor do produto seja
- * visível apenas ao Builder, garantindo que toda criação passe pelas validações.
  * @note Papel no Padrão: Builder
  */
 public class CandidatoBuilder {
@@ -35,7 +33,6 @@ public class CandidatoBuilder {
         return this;
     }
 
-
     public CandidatoBuilder comIdade(int idade) {
         this.idade = idade;
         System.out.println("[BUILDER] Idade definida: " + idade);
@@ -59,4 +56,3 @@ public class CandidatoBuilder {
         return new Candidato(nome, numero, partido, idade);
     }
 }
-

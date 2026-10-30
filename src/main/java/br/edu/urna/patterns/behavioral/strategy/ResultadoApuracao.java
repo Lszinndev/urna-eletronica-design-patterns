@@ -4,12 +4,7 @@ import br.edu.urna.domain.Candidato;
 
 /**
  * Resultado comum devolvido por qualquer regra de apuração.
- * Permite que o Context trate todas as estratégias de forma uniforme,
- * sem precisar conhecer a classe concreta que gerou o resultado.
- *
- * @param eleito     candidato eleito, ou null se não houver eleito (sem votos válidos ou 2º turno)
- * @param finalista1 1º colocado que disputará o 2º turno, ou null se não houver 2º turno
- * @param finalista2 2º colocado que disputará o 2º turno, ou null se não houver 2º turno
+ * @note Papel no Padrão: Resultado (Strategy)
  */
 public record ResultadoApuracao(Candidato eleito, Candidato finalista1, Candidato finalista2) {
 
@@ -29,9 +24,6 @@ public record ResultadoApuracao(Candidato eleito, Candidato finalista1, Candidat
         return eleito == null && finalista1 != null && finalista2 != null;
     }
 
-    /**
-     * Decide o 2º turno entre os dois finalistas. Em empate exato, vence o mais idoso.
-     */
     public Candidato decidirSegundoTurno(int votosFinalista1, int votosFinalista2) {
         if (!temSegundoTurno()) {
             throw new IllegalStateException("Este resultado não possui 2º turno.");
@@ -57,4 +49,3 @@ public record ResultadoApuracao(Candidato eleito, Candidato finalista1, Candidat
         return vencedor;
     }
 }
-

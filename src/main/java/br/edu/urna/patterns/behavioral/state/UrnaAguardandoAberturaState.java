@@ -6,7 +6,6 @@ import java.util.function.BooleanSupplier;
 
 /**
  * Urna ligada, aguardando o mesário abrir a seção e emitir a Zerésima.
- * Único estado em que ainda é possível cadastrar candidatos.
  * @note Papel no Padrão: Concrete State
  */
 public class UrnaAguardandoAberturaState implements EstadoUrna {
@@ -50,4 +49,3 @@ public class UrnaAguardandoAberturaState implements EstadoUrna {
         return false;
     }
 }
-

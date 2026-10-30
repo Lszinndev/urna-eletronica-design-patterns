@@ -2,6 +2,7 @@ package br.edu.urna.domain;
 
 /**
  * Representa um candidato que disputa a eleição na seção.
+ * 
  * @note Papel no Padrão: Product (Builder)
  */
 public class Candidato {
@@ -11,10 +12,6 @@ public class Candidato {
     private final String partido;
     private final int idade;
 
-    /**
-     * Construtor visível apenas no pacote: a criação deve passar pelo CandidatoBuilder,
-     * que valida os dados antes de construir o objeto.
-     */
     Candidato(String nome, int numero, String partido, int idade) {
         this.nome = nome;
         this.numero = numero;

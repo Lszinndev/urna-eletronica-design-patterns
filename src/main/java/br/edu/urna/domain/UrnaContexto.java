@@ -7,7 +7,6 @@ import java.util.function.BooleanSupplier;
 
 /**
  * Representa a urna eletrônica e guarda o estado em que ela se encontra.
- * Todas as decisões de "pode ou não pode" são delegadas ao estado atual.
  * @note Papel no Padrão: Context (State)
  */
 public class UrnaContexto {

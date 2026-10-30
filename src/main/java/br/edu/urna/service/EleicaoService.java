@@ -71,10 +71,6 @@ public class EleicaoService {
         }
     }
 
-    /**
-     * O estado da urna decide primeiro se aceita liberação; somente então
-     * a autorização (eleitor repetido + consulta ao TSE via Adapter) é executada.
-     */
     public void liberarEleitor(String titulo) {
         boolean liberou = urna.liberar(() -> autorizarEleitor(titulo));
         if (liberou) {
@@ -105,11 +101,6 @@ public class EleicaoService {
         }
     }
 
-    /**
-     * Executa a regra escolhida. O Context conhece apenas a interface
-     * RegraApuracaoStrategy e o ResultadoApuracao, nunca a classe concreta.
-     * @return true se o resultado exigir 2º turno
-     */
     public boolean apurar(int opcaoRegra) {
         if (!urna.permiteApuracao()) {
             System.out.println("Encerre a votação (opção 5) antes de apurar os resultados.");

@@ -6,7 +6,6 @@ import br.edu.urna.patterns.creational.singleton.CofreDeVotos;
 /**
  * Exige 50% + 1 dos votos válidos para eleger no 1º turno. Se ninguém atingir,
  * leva os dois mais votados ao 2º turno, com desempate pelo candidato mais idoso.
- * Estratégia sem estado: todo o resultado é devolvido em ResultadoApuracao.
  * @note Papel no Padrão: Concrete Strategy
  */
 public class SegundoTurnoAbsolutoStrategy implements RegraApuracaoStrategy {
