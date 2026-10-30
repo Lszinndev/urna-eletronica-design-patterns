@@ -1,11 +1,13 @@
 package br.edu.urna.domain;
 
 import br.edu.urna.patterns.behavioral.state.EstadoUrna;
-import br.edu.urna.patterns.behavioral.state.UrnaBloqueadaState;
-import br.edu.urna.patterns.behavioral.state.UrnaEncerradaState;
+import br.edu.urna.patterns.behavioral.state.UrnaAguardandoAberturaState;
+
+import java.util.function.BooleanSupplier;
 
 /**
  * Representa a urna eletrônica e guarda o estado em que ela se encontra.
+ * Todas as decisões de "pode ou não pode" são delegadas ao estado atual.
  * @note Papel no Padrão: Context (State)
  */
 public class UrnaContexto {
@@ -13,7 +15,7 @@ public class UrnaContexto {
     private EstadoUrna estado;
 
     public UrnaContexto() {
-        this.estado = new UrnaBloqueadaState();
+        this.estado = new UrnaAguardandoAberturaState();
     }
 
     public void setEstado(EstadoUrna novoEstado) {
@@ -25,8 +27,12 @@ public class UrnaContexto {
         return estado.getNome();
     }
 
-    public boolean liberar() {
-        return estado.liberar(this);
+    public boolean abrir() {
+        return estado.abrir(this);
+    }
+
+    public boolean liberar(BooleanSupplier autorizacao) {
+        return estado.liberar(this, autorizacao);
     }
 
     public boolean votar(int numero) {
@@ -37,7 +43,11 @@ public class UrnaContexto {
         return estado.encerrar(this);
     }
 
-    public boolean estaEncerrada() {
-        return estado instanceof UrnaEncerradaState;
+    public boolean permiteCadastro() {
+        return estado.permiteCadastro();
+    }
+
+    public boolean permiteApuracao() {
+        return estado.permiteApuracao();
     }
 }

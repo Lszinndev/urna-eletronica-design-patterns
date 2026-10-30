@@ -3,6 +3,7 @@ package br.edu.urna.patterns.creational.singleton;
 import br.edu.urna.domain.Candidato;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,8 +13,6 @@ import java.util.Map;
  * @note Papel no Padrão: Singleton
  */
 public class CofreDeVotos {
-
-    private static CofreDeVotos instancia;
 
     private final List<Candidato> candidatos = new ArrayList<>();
     private final Map<Integer, Integer> votosPorCandidato = new HashMap<>();
@@ -25,11 +24,17 @@ public class CofreDeVotos {
         System.out.println("[SINGLETON] Cofre de votos criado (instância única).");
     }
 
+    /**
+     * Idiom "Initialization-on-demand Holder": a JVM só carrega a classe Holder
+     * na primeira chamada de getInstancia(), e a inicialização de classes é
+     * thread-safe por especificação. Resultado: criação lazy e segura sem synchronized.
+     */
+    private static class Holder {
+        private static final CofreDeVotos INSTANCIA = new CofreDeVotos();
+    }
+
     public static CofreDeVotos getInstancia() {
-        if (instancia == null) {
-            instancia = new CofreDeVotos();
-        }
-        return instancia;
+        return Holder.INSTANCIA;
     }
 
     public void adicionarCandidato(Candidato candidato) {
@@ -67,8 +72,12 @@ public class CofreDeVotos {
         return votosPorCandidato.get(candidato.getNumero());
     }
 
+    /**
+     * Retorna uma visão somente leitura: novos candidatos só entram pelo
+     * adicionarCandidato(), mantendo a lista e o mapa de votos sempre consistentes.
+     */
     public List<Candidato> getCandidatos() {
-        return candidatos;
+        return Collections.unmodifiableList(candidatos);
     }
 
     public int getTotalDeVotos() {

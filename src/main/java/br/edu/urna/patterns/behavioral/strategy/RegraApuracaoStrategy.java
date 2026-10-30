@@ -11,5 +11,15 @@ public interface RegraApuracaoStrategy {
 
     String getNome();
 
-    Candidato apurar(CofreDeVotos cofre);
+    ResultadoApuracao apurar(CofreDeVotos cofre);
+
+    /**
+     * Critério de classificação compartilhado pelas regras:
+     * mais votos vence; em empate, vence o candidato mais idoso.
+     */
+    default boolean estaNaFrente(Candidato a, Candidato b, CofreDeVotos cofre) {
+        int votosA = cofre.getVotosDoCandidato(a);
+        int votosB = cofre.getVotosDoCandidato(b);
+        return votosA > votosB || (votosA == votosB && a.getIdade() > b.getIdade());
+    }
 }

@@ -2,6 +2,8 @@ package br.edu.urna.patterns.behavioral.state;
 
 import br.edu.urna.domain.UrnaContexto;
 
+import java.util.function.BooleanSupplier;
+
 /**
  * Urna aguardando o mesário liberar o próximo eleitor.
  * @note Papel no Padrão: Concrete State
@@ -14,7 +16,16 @@ public class UrnaBloqueadaState implements EstadoUrna {
     }
 
     @Override
-    public boolean liberar(UrnaContexto urna) {
+    public boolean abrir(UrnaContexto urna) {
+        System.out.println("[STATE] A seção já está aberta.");
+        return false;
+    }
+
+    @Override
+    public boolean liberar(UrnaContexto urna, BooleanSupplier autorizacao) {
+        if (!autorizacao.getAsBoolean()) {
+            return false;
+        }
         urna.setEstado(new UrnaLiberadaVotoState());
         return true;
     }
@@ -29,5 +40,15 @@ public class UrnaBloqueadaState implements EstadoUrna {
     public boolean encerrar(UrnaContexto urna) {
         urna.setEstado(new UrnaEncerradaState());
         return true;
+    }
+
+    @Override
+    public boolean permiteCadastro() {
+        return false;
+    }
+
+    @Override
+    public boolean permiteApuracao() {
+        return false;
     }
 }

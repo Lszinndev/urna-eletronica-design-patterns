@@ -15,12 +15,12 @@ public class MaioriaSimplesStrategy implements RegraApuracaoStrategy {
     }
 
     @Override
-    public Candidato apurar(CofreDeVotos cofre) {
+    public ResultadoApuracao apurar(CofreDeVotos cofre) {
         System.out.println("[STRATEGY] Executando a regra: " + getNome());
 
         if (cofre.getVotosValidos() == 0) {
             System.out.println("[STRATEGY] Nenhum voto válido. Não há candidato eleito.");
-            return null;
+            return ResultadoApuracao.semEleito();
         }
 
         Candidato vencedor = null;
@@ -31,12 +31,6 @@ public class MaioriaSimplesStrategy implements RegraApuracaoStrategy {
         }
 
         System.out.println("[STRATEGY] ELEITO: " + vencedor.getNome() + " com " + cofre.getVotosDoCandidato(vencedor) + " votos.");
-        return vencedor;
-    }
-
-    private boolean estaNaFrente(Candidato a, Candidato b, CofreDeVotos cofre) {
-        int votosA = cofre.getVotosDoCandidato(a);
-        int votosB = cofre.getVotosDoCandidato(b);
-        return votosA > votosB || (votosA == votosB && a.getIdade() > b.getIdade());
+        return ResultadoApuracao.eleito(vencedor);
     }
 }

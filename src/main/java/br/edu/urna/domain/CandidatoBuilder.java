@@ -1,9 +1,9 @@
-package br.edu.urna.patterns.creational.builder;
-
-import br.edu.urna.domain.Candidato;
+package br.edu.urna.domain;
 
 /**
  * Monta um objeto Candidato passo a passo.
+ * Fica no mesmo pacote de Candidato para que o construtor do produto seja
+ * visível apenas ao Builder, garantindo que toda criação passe pelas validações.
  * @note Papel no Padrão: Builder
  */
 public class CandidatoBuilder {
@@ -49,6 +49,9 @@ public class CandidatoBuilder {
         if (numero <= 0) {
             throw new IllegalStateException("O número deve ser maior que zero (o 0 é reservado para voto em branco).");
         }
+        if (partido == null || partido.isBlank()) {
+            throw new IllegalStateException("O partido do candidato é obrigatório.");
+        }
         if (idade < 18) {
             throw new IllegalStateException("O candidato precisa ter pelo menos 18 anos.");
         }
@@ -56,3 +59,4 @@ public class CandidatoBuilder {
         return new Candidato(nome, numero, partido, idade);
     }
 }
+

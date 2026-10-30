@@ -8,25 +8,27 @@ O projeto aplica **6 Design Patterns GoF**, 2 de cada categoria.
 
 | Padrão | Categoria | Problema de negócio resolvido |
 | ------ | --------- | ----------------------------- |
-| **Builder** | Criacional | Monta o `Candidato` passo a passo (nome, número, partido e idade), validando os dados antes de criar o objeto e evitando construtores gigantes. |
-| **Singleton** | Criacional | Garante uma única instância de `CofreDeVotos`, centralizando candidatos, votos nominais, brancos e nulos da seção. |
+| **Builder** | Criacional | Monta o `Candidato` passo a passo (nome, número, partido e idade), validando os dados antes de criar o objeto e evitando construtores gigantes. O construtor de `Candidato` é visível apenas no pacote, então toda criação passa obrigatoriamente pelo `CandidatoBuilder`. |
+| **Singleton** | Criacional | Garante uma única instância de `CofreDeVotos` (idiom *Holder*: lazy e thread-safe), centralizando candidatos, votos nominais, brancos e nulos da seção. |
 | **Adapter** | Estrutural | Converte a resposta numérica (`1`/`0`) do `SistemaLegadoTSE` para o `boolean` esperado pela interface `ValidadorEleitor` da urna. |
 | **Facade** | Estrutural | `TerminalMesarioFacade` coordena tela, áudio e impressora com um único comando para abrir a seção (Zerésima) ou encerrá-la (Boletim de Urna). |
-| **State** | Comportamental | Controla o ciclo da urna (`Bloqueada`, `Liberada para Voto`, `Encerrada`), impedindo votos sem liberação do mesário ou após o encerramento. |
-| **Strategy** | Comportamental | Permite escolher em tempo de execução a regra de apuração: `MaioriaSimplesStrategy` ou `SegundoTurnoAbsolutoStrategy` (50% + 1, 2º turno e desempate por idade). |
+| **State** | Comportamental | Controla todo o ciclo da urna (`Aguardando Abertura`, `Bloqueada`, `Liberada para Voto`, `Encerrada`), impedindo cadastro após a abertura, votos sem liberação do mesário, encerramento antes da abertura e apuração antes do encerramento. |
+| **Strategy** | Comportamental | Permite escolher em tempo de execução a regra de apuração: `MaioriaSimplesStrategy` ou `SegundoTurnoAbsolutoStrategy` (50% + 1, 2º turno e desempate por idade). Todas devolvem um `ResultadoApuracao` comum, então o Context não conhece a regra concreta. |
 
 ## 📂 Estrutura (4 camadas)
 
 ```text
 src/main/java/br/edu/urna/
-├── domain/      Candidato, UrnaContexto
+├── domain/      Candidato, CandidatoBuilder, UrnaContexto
 ├── patterns/
-│   ├── creational/   builder/CandidatoBuilder, singleton/CofreDeVotos
+│   ├── creational/   singleton/CofreDeVotos
 │   ├── structural/   adapter/(ValidadorEleitor, SistemaLegadoTSE, ValidadorEleitorAdapter), facade/TerminalMesarioFacade
-│   └── behavioral/   state/(EstadoUrna + 3 estados), strategy/(RegraApuracaoStrategy + 2 regras)
+│   └── behavioral/   state/(EstadoUrna + 4 estados), strategy/(RegraApuracaoStrategy + 2 regras + ResultadoApuracao)
 ├── service/     EleicaoService, AudioUrnaService, TelaUrnaService, ImpressoraService
 └── main/        Main (menu interativo com Scanner)
 ```
+
+> O `CandidatoBuilder` fica em `domain/`, junto com `Candidato`, para que o construtor do produto possa ser restrito ao pacote e o Builder seja o único caminho de criação.
 
 ## ⚖️ Regras de negócio
 
@@ -38,6 +40,14 @@ src/main/java/br/edu/urna/
 - **Um voto por eleitor:** o mesmo título não pode ser liberado duas vezes.
 - **1º turno:** é eleito quem atingir `votos válidos / 2 + 1`.
 - **2º turno:** se ninguém atingir a meta, os dois mais votados disputam o 2º turno. Em empate exato, vence o **candidato mais idoso**.
+
+## 🔄 Ciclo de estados da urna
+
+```text
+Aguardando Abertura --abrir--> Bloqueada --liberar--> Liberada para Voto
+                               Bloqueada <--votar---- Liberada para Voto
+                               Bloqueada --encerrar--> Encerrada
+```
 
 ## 🖥️ Menu
 

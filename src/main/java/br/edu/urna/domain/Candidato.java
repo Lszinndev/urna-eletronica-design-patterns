@@ -11,7 +11,11 @@ public class Candidato {
     private final String partido;
     private final int idade;
 
-    public Candidato(String nome, int numero, String partido, int idade) {
+    /**
+     * Construtor visível apenas no pacote: a criação deve passar pelo CandidatoBuilder,
+     * que valida os dados antes de construir o objeto.
+     */
+    Candidato(String nome, int numero, String partido, int idade) {
         this.nome = nome;
         this.numero = numero;
         this.partido = partido;
